@@ -9,7 +9,9 @@
     <small
       ><span *ngIf="userAuth === message.user">me</span
       ><span *ngIf="userAuth !== message.user">my love</span> -
-      {{ message.timestamp.seconds * 1000 | date: "medium" }}</small
+      <span *ngIf="message.timestamp">
+        {{ message.timestamp.seconds * 1000 | date: "medium" }}</span
+      ></small
     >
   </p>
   <p>{{ message.msg }}</p>
