@@ -5,5 +5,12 @@
     own: userAuth === message.user
   }"
 >
-  <span> {{ message.user }} - {{ message.msg }} </span>
+  <p>
+    <small
+      ><span *ngIf="userAuth === message.user">me</span
+      ><span *ngIf="userAuth !== message.user">my love</span> -
+      {{ message.timestamp.seconds * 1000 | date: "medium" }}</small
+    >
+  </p>
+  <p>{{ message.msg }}</p>
 </div>
