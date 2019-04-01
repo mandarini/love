@@ -15,7 +15,8 @@ export class ChatComponent implements OnInit {
   @ViewChild("msgContainer") private messagesContainer: ElementRef;
 
   @Input() userAuth: string;
-  messages: Observable<Message[]>;
+  messages: Message[];
+  unauthorized: boolean = true;
   private msgRef: AngularFirestoreCollection<Message>;
 
   constructor(private db: AngularFirestore) {
@@ -25,7 +26,15 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.messages = this.msgRef.valueChanges();
+    this.msgRef.valueChanges().subscribe(
+      res => {
+        this.messages = res;
+        this.unauthorized = false;
+      },
+      error => {
+        this.unauthorized = true;
+      }
+    );
     this.scrollToBottom();
   }
 

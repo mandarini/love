@@ -1,10 +1,13 @@
-<div class="full-container">
+<div class="full-container" *ngIf="!unauthorized">
   <app-input [userAuth]="userAuth"></app-input>
   <div class="msg-container" #msgContainer>
     <app-message
-      *ngFor="let msg of (messages | async)"
+      *ngFor="let msg of messages"
       [message]="msg"
       [userAuth]="userAuth"
     ></app-message>
   </div>
+</div>
+<div *ngIf="unauthorized">
+  <h2>Get out, you're not authorized!</h2>
 </div>
