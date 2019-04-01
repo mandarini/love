@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
-import { Observable } from "rxjs";
 import { Message } from "@angular/compiler/src/i18n/i18n_ast";
 import {
   AngularFirestoreCollection,
   AngularFirestore
 } from "@angular/fire/firestore";
+import { AngularFireAuth } from "@angular/fire/auth";
 
 @Component({
   selector: "app-chat",
@@ -19,7 +19,7 @@ export class ChatComponent implements OnInit {
   unauthorized: boolean = true;
   private msgRef: AngularFirestoreCollection<Message>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, public afAuth: AngularFireAuth) {
     this.msgRef = db.collection<Message>("messages", ref =>
       ref.orderBy("timestamp")
     );
@@ -33,6 +33,7 @@ export class ChatComponent implements OnInit {
       },
       error => {
         this.unauthorized = true;
+        this.afAuth.auth.signOut();
       }
     );
     this.scrollToBottom();
