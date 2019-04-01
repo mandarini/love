@@ -1,10 +1,14 @@
-
-<div *ngIf="afAuth.user | async as user; else showLogin">
-  <h2>Hello {{ user.displayName }}!</h2>
+<div *ngIf="(afAuth.user | async) as user; else showLogin">
+  <h2 *ngIf="user.email == 'sk.katherine@gmail.com'">Hi Kat!</h2>
+  <h2 *ngIf="user.email !== 'sk.katherine@gmail.com'">Hi Jubi!</h2>
+  <div class="heart"></div>
   <app-chat [userAuth]="user.displayName"></app-chat>
   <button class="logout-btn" (click)="logout()">Logout</button>
 </div>
 <ng-template #showLogin>
-  <p>Please login.</p>
-  <button (click)="login()">Login with Google</button>
+  <div class="login-screen">
+    <div class="heart"></div>
+    <p>Please login.</p>
+    <button (click)="login()">Login with Google</button>
+  </div>
 </ng-template>
